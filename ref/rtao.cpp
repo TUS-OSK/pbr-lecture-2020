@@ -37,41 +37,39 @@ Vec3f sampleHemisphere(float u, float v) {
 
 // AO
 float RTAO(const IntersectInfo& info, const Scene& scene, RNG& rng) {
-  // AOサンプル数
-  constexpr int AO_SAMPLES = 100;
   // 遮蔽判定距離
   constexpr float DISTANCE = 10.0f;
+  // rho
+  constexpr float rho = 1.0f;
 
-  // 遮蔽割合の計算
-  int count = 0;
-  for (int i = 0; i < AO_SAMPLES; ++i) {
-    // 接空間の基底の計算
-    Vec3f t, b;
-    tangentSpaceBasis(info.hitNormal, t, b);
+  // RTAO
+  float radiance = 0;
+  // 接空間の基底の計算
+  Vec3f t, b;
+  tangentSpaceBasis(info.hitNormal, t, b);
 
-    // 半球面一様サンプリング
-    const Vec3f direction_tangent =
-        sampleHemisphere(rng.getNext(), rng.getNext());
+  // 半球面一様サンプリング
+  const Vec3f direction_tangent =
+      sampleHemisphere(rng.getNext(), rng.getNext());
 
-    // 接空間からワールド座標系への変換
-    const Vec3f direction =
-        localToWorld(direction_tangent, t, info.hitNormal, b);
+  // 接空間からワールド座標系への変換
+  const Vec3f direction = localToWorld(direction_tangent, t, info.hitNormal, b);
 
-    // 遮蔽判定
-    Ray shadow_ray(info.hitPos, direction);
-    IntersectInfo shadow_info;
-    if (scene.intersect(shadow_ray, shadow_info) && shadow_info.t < DISTANCE) {
-      count++;
-    }
+  // 遮蔽判定
+  Ray shadow_ray(info.hitPos, direction);
+  IntersectInfo shadow_info;
+  if (!scene.intersect(shadow_ray, shadow_info)) {
+    const float cos = dot(direction, info.hitNormal);
+    radiance += 2.0 * rho * cos;
   }
 
-  return static_cast<float>(count) / AO_SAMPLES;
+  return radiance;
 }
 
 int main() {
   constexpr int width = 512;
   constexpr int height = 512;
-  constexpr int SSAA_samples = 16;
+  constexpr int SSAA_samples = 1000;
   Image img(width, height);
 
   const Vec3f camPos(4, 1, 7);
@@ -106,10 +104,13 @@ int main() {
         // レイの生成
         const Ray ray = camera.sampleRay(u, v);
 
-        // 1.0 - AOを色にする
+        // 放射輝度の計算
         IntersectInfo info;
         if (scene.intersect(ray, info)) {
-          color += Vec3f(1.0f - RTAO(info, scene, rng));
+          const float radiance = RTAO(info, scene, rng);
+          color += Vec3f(radiance);
+        } else {
+          color += Vec3f(1.0f);
         }
       }
 
