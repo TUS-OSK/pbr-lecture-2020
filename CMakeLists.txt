@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(2020-lecture-08 LANGUAGES CXX)
+project(pbr-lecture-2020 LANGUAGES CXX)
 
 option(BUILD_REFERENCE "build reference raytracer" ON)
 
