@@ -23,17 +23,22 @@
 └── src           演習で実装していく部分
 ```
 
+リファレンスには以下の例が含まれています。
+
+|Name|Description|
+|:--|:--|
+|`ref/rtao.cpp`|長さ2までのレンダリング方程式をモンテカルロ積分で数値計算する例|
+|`ref/pt.cpp`|パストレーシングでレンダリング方程式を解く例|
+
 ## Build
 
 ビルド用のディレクトリbuild を作成した後、CMakeを利用してビルドを行います。
-
-Windowsでビルドする場合はcmake実行後にVisual Studioのソリューションファイルが生成されるので、それを開いてビルドします。
 
 ```
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make
+cmake --build .
 ```
 
 デバッグモードでビルドしたい場合は-DCMAKE_BUILD_TYPE=Releaseを-DCMAKE_BUILD_TYPE=Releaseに変更してください。
