@@ -1,9 +1,10 @@
 # pbr-lecture-2020
 
-[p-ray](https://p-ray.oskt.us/)の2020年度講義: 物理ベースレンダリングの回のリポジトリです。
+[p-ray](https://p-ray.oskt.us/)の2020年度講義: 物理ベースレンダリング回のリポジトリです。
+
+![](img/pt.png)
 
 演習用のディレクトリやリファレンス実装が含まれています。CMakeを用いて簡単にビルドが行なえます。
-
 
 ## Requirements
 
