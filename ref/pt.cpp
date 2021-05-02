@@ -43,7 +43,7 @@ Vec3f pathTracing(const Ray& ray_in, const Scene& scene, RNG& rng) {
 
   // path tracing
   Vec3f radiance = 0;            // 放射輝度
-  Vec3f throughput = {1, 1, 1};  // f*Le*cos / pdfの積
+  Vec3f throughput = {1, 1, 1};  // f*cos / pdfの積
   Ray ray = ray_in;
   for (int i = 0; i < maxDepth; ++i) {
     // ロシアンルーレット
