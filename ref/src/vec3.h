@@ -7,13 +7,9 @@ template <typename T>
 struct Vec3 {
   T v[3];
 
-  Vec3() { v[0] = v[1] = v[2] = 0; }
-  Vec3(T x) { v[0] = v[1] = v[2] = x; }
-  Vec3(T x, T y, T z) {
-    v[0] = x;
-    v[1] = y;
-    v[2] = z;
-  }
+  constexpr Vec3() : v{0, 0, 0} {}
+  constexpr Vec3(T x) : v{x, x, x} {}
+  constexpr Vec3(T x, T y, T z) : v{x, y, z} {}
 
   T operator[](unsigned int i) const { return v[i]; }
   T& operator[](unsigned int i) { return v[i]; }
