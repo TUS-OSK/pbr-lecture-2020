@@ -19,7 +19,7 @@ Vec3f localToWorld(const Vec3f& v, const Vec3f& lx, const Vec3f& ly,
 
 // 法線から接空間の基底を計算する
 void tangentSpaceBasis(const Vec3f& n, Vec3f& t, Vec3f& b) {
-  if (n[1] < 0.9f) {
+  if (std::abs(n[1]) < 0.9f) {
     t = normalize(cross(n, Vec3f(0, 1, 0)));
   } else {
     t = normalize(cross(n, Vec3f(0, 0, -1)));
@@ -89,9 +89,9 @@ Vec3f pathTracing(const Ray& ray_in, const Scene& scene, RNG& rng) {
 }
 
 int main() {
-  constexpr int width = 512;      // 画像の横幅[px]
-  constexpr int height = 512;     // 画像の縦幅[px]
-  constexpr int samples = 10000;  // サンプル数
+  constexpr int width = 512;    // 画像の横幅[px]
+  constexpr int height = 512;   // 画像の縦幅[px]
+  constexpr int samples = 100;  // サンプル数
   Image img(width, height);
 
   // カメラの設定
