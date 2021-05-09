@@ -7,3 +7,8 @@ add_executable(pt pt.cpp)
 target_compile_features(pt PRIVATE cxx_std_17)
 target_include_directories(pt PRIVATE src)
 target_link_libraries(pt PRIVATE OpenMP::OpenMP_CXX)
+
+add_executable(pt-importance pt-importance.cpp)
+target_compile_features(pt-importance PRIVATE cxx_std_17)
+target_include_directories(pt-importance PRIVATE src)
+target_link_libraries(pt-importance PRIVATE OpenMP::OpenMP_CXX)
