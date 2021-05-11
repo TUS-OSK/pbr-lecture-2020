@@ -89,7 +89,7 @@ int main() {
   scene.addSphere(Sphere(Vec3f(-2, 3, 1), 1.0, Vec3f(1), MaterialType::Mirror));
   scene.addSphere(Sphere(Vec3f(3, 1, 2), 1.0, Vec3f(1), MaterialType::Glass));
 
-#pragma omp parallel for schedule(dynamic, 1)
+#pragma omp parallel for schedule(dynamic, 1) collapse(2)
   for (int j = 0; j < height; ++j) {
     for (int i = 0; i < width; ++i) {
       // NOTE: 並列化のために画素ごとに乱数生成器を用意する
