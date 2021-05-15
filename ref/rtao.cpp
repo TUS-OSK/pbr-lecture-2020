@@ -8,16 +8,6 @@
 #include "rng.h"
 #include "scene.h"
 
-// 法線から接空間の基底を計算する
-void tangentSpaceBasis(const Vec3f& n, Vec3f& t, Vec3f& b) {
-  if (n[1] < 0.9f) {
-    t = normalize(cross(n, Vec3f(0, 1, 0)));
-  } else {
-    t = normalize(cross(n, Vec3f(0, 0, -1)));
-  }
-  b = normalize(cross(t, n));
-}
-
 // 接空間での半球面一様サンプリング
 Vec3f sampleHemisphere(float u, float v) {
   const float theta = std::acos(std::max(1.0f - u, 0.0f));
