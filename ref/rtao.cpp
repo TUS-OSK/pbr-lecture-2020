@@ -6,15 +6,8 @@
 #include "image.h"
 #include "pinhole-camera.h"
 #include "rng.h"
+#include "sampling.h"
 #include "scene.h"
-
-// 接空間での半球面一様サンプリング
-Vec3f sampleHemisphere(float u, float v) {
-  const float theta = std::acos(std::max(1.0f - u, 0.0f));
-  const float phi = 2.0f * PI * v;
-  return Vec3f(std::cos(phi) * std::sin(theta), 1.0f - u,
-               std::sin(phi) * std::sin(theta));
-}
 
 // AO
 float RTAO(const IntersectInfo& info, const Scene& scene, RNG& rng) {
@@ -30,8 +23,9 @@ float RTAO(const IntersectInfo& info, const Scene& scene, RNG& rng) {
   tangentSpaceBasis(info.hitNormal, t, b);
 
   // 半球面一様サンプリング
+  float _pdf;
   const Vec3f direction_tangent =
-      sampleHemisphere(rng.getNext(), rng.getNext());
+      sampleHemisphere(rng.getNext(), rng.getNext(), _pdf);
 
   // 接空間からワールド座標系への変換
   const Vec3f direction = localToWorld(direction_tangent, t, info.hitNormal, b);

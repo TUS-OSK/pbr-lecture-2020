@@ -6,15 +6,8 @@
 #include "image.h"
 #include "pinhole-camera.h"
 #include "rng.h"
+#include "sampling.h"
 #include "scene.h"
-
-// 接空間での半球面一様サンプリング
-Vec3f sampleHemisphere(float u, float v) {
-  const float theta = std::acos(std::max(1.0f - u, 0.0f));
-  const float phi = 2.0f * PI * v;
-  return Vec3f(std::cos(phi) * std::sin(theta), 1.0f - u,
-               std::sin(phi) * std::sin(theta));
-}
 
 // Primary Rayを入力とし, 放射輝度をパストレーシングで計算して返す
 Vec3f pathTracing(const Ray& ray_in, const Scene& scene, RNG& rng) {
@@ -45,8 +38,9 @@ Vec3f pathTracing(const Ray& ray_in, const Scene& scene, RNG& rng) {
     Vec3f t, b;
     tangentSpaceBasis(info.hitNormal, t, b);
     // 半球面一様サンプリング
+    float pdf;
     const Vec3f directionTangent =
-        sampleHemisphere(rng.getNext(), rng.getNext());
+        sampleHemisphere(rng.getNext(), rng.getNext(), pdf);
     // 接空間からワールド座標系への変換
     const Vec3f direction =
         localToWorld(directionTangent, t, info.hitNormal, b);
@@ -55,8 +49,6 @@ Vec3f pathTracing(const Ray& ray_in, const Scene& scene, RNG& rng) {
     const Vec3f brdf = rho / PI;
     // cosの計算
     const float cos = std::abs(dot(direction, info.hitNormal));
-    // p.d.f.の計算
-    const float pdf = 1.0f / (2.0f * PI);
 
     // throughputの更新
     throughput *= brdf * cos / pdf;
