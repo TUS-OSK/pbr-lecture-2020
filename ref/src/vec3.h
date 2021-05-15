@@ -169,6 +169,15 @@ inline std::ostream& operator<<(std::ostream& stream, const Vec3<T>& v) {
   return stream;
 }
 
+// ローカル座標系からワールド座標系への変換
+template <typename T>
+Vec3<T> localToWorld(const Vec3<T>& v, const Vec3<T>& lx, const Vec3<T>& ly,
+                     const Vec3<T>& lz) {
+  return Vec3<T>(v[0] * lx[0] + v[1] * ly[0] + v[2] * lz[0],
+                 v[0] * lx[1] + v[1] * ly[1] + v[2] * lz[1],
+                 v[0] * lx[2] + v[1] * ly[2] + v[2] * lz[2]);
+}
+
 using Vec3u = Vec3<unsigned int>;
 using Vec3i = Vec3<int>;
 using Vec3f = Vec3<float>;

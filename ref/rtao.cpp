@@ -9,14 +9,6 @@
 
 constexpr float PI = 3.14159265359f;
 
-// ローカル座標系からワールド座標系への変換
-Vec3f localToWorld(const Vec3f& v, const Vec3f& lx, const Vec3f& ly,
-                   const Vec3f& lz) {
-  return Vec3f(v[0] * lx[0] + v[1] * ly[0] + v[2] * lz[0],
-               v[0] * lx[1] + v[1] * ly[1] + v[2] * lz[1],
-               v[0] * lx[2] + v[1] * ly[2] + v[2] * lz[2]);
-}
-
 // 法線から接空間の基底を計算する
 void tangentSpaceBasis(const Vec3f& n, Vec3f& t, Vec3f& b) {
   if (n[1] < 0.9f) {
