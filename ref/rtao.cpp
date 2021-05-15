@@ -2,12 +2,11 @@
 
 #include <cmath>
 
+#include "constant.h"
 #include "image.h"
 #include "pinhole-camera.h"
 #include "rng.h"
 #include "scene.h"
-
-constexpr float PI = 3.14159265359f;
 
 // 法線から接空間の基底を計算する
 void tangentSpaceBasis(const Vec3f& n, Vec3f& t, Vec3f& b) {
