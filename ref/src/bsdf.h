@@ -7,6 +7,9 @@
 
 class BSDF {
  public:
+  // BSDFの値を計算して返す
+  virtual Vec3f eval(const Vec3f& wo, const Vec3f& wi) const = 0;
+
   // BSDF x cosに比例するように方向サンプリングを行う
   // 返り値としてBSDFの値, pdfを返す
   virtual Vec3f sample(RNG& rng, Vec3f& dir, float& pdf) const = 0;
@@ -20,7 +23,11 @@ class Lambert : public BSDF {
  public:
   Lambert(const Vec3f& rho) : rho(rho) {}
 
-  Vec3f sample(RNG& rng, Vec3f& dir, float& pdf) const {
+  Vec3f eval(const Vec3f& wo, const Vec3f& wi) const override {
+    return rho * PI_INV;
+  }
+
+  Vec3f sample(RNG& rng, Vec3f& dir, float& pdf) const override {
     dir = sampleCosineHemisphere(rng.getNext(), rng.getNext(), pdf);
     return rho * PI_INV;
   }

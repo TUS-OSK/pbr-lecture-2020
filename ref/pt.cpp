@@ -37,21 +37,20 @@ Vec3f pathTracing(const Ray& ray_in, const Scene& scene, RNG& rng) {
     // 接空間の基底の計算
     Vec3f t, b;
     tangentSpaceBasis(info.hitNormal, t, b);
-    // 半球面一様サンプリング
+
+    // BSDF Sampling
     float pdf;
-    const Vec3f directionTangent =
-        sampleHemisphere(rng.getNext(), rng.getNext(), pdf);
+    Vec3f directionTangent;
+    const Vec3f bsdf = info.hitSphere->bsdf->sample(rng, directionTangent, pdf);
     // 接空間からワールド座標系への変換
     const Vec3f direction =
         localToWorld(directionTangent, t, info.hitNormal, b);
 
-    // BRDFの計算
-    const Vec3f brdf = rho / PI;
     // cosの計算
     const float cos = std::abs(dot(direction, info.hitNormal));
 
     // throughputの更新
-    throughput *= brdf * cos / pdf;
+    throughput *= bsdf * cos / pdf;
 
     // 次のレイの生成
     ray.origin = info.hitPos;
@@ -74,16 +73,18 @@ int main() {
 
   // シーンの作成
   Scene scene;
-  scene.addSphere(
-      Sphere(Vec3f(0, -1001, 0), 1000.0, Vec3f(0.9), MaterialType::Diffuse));
-  scene.addSphere(Sphere(Vec3f(-2, 0, 1), 1.0, Vec3f(0.8, 0.2, 0.2),
-                         MaterialType::Diffuse));
-  scene.addSphere(
-      Sphere(Vec3f(0), 1.0, Vec3f(0.2, 0.8, 0.2), MaterialType::Diffuse));
-  scene.addSphere(Sphere(Vec3f(2, 0, -1), 1.0, Vec3f(0.2, 0.2, 0.8),
-                         MaterialType::Diffuse));
-  scene.addSphere(Sphere(Vec3f(-2, 3, 1), 1.0, Vec3f(1), MaterialType::Mirror));
-  scene.addSphere(Sphere(Vec3f(3, 1, 2), 1.0, Vec3f(1), MaterialType::Glass));
+
+  const auto mat1 = std::make_shared<Lambert>(Vec3f(0.9));
+  const auto mat2 = std::make_shared<Lambert>(Vec3f(0.9, 0.1, 0.1));
+  const auto mat3 = std::make_shared<Lambert>(Vec3f(0.1, 0.9, 0.1));
+  const auto mat4 = std::make_shared<Lambert>(Vec3f(0.1, 0.1, 0.9));
+
+  scene.addSphere(Sphere(Vec3f(0, -1001, 0), 1000.0, mat1));
+  scene.addSphere(Sphere(Vec3f(-2, 0, 1), 1.0, mat2));
+  scene.addSphere(Sphere(Vec3f(0), 1.0, mat3));
+  scene.addSphere(Sphere(Vec3f(2, 0, -1), 1.0, mat4));
+  scene.addSphere(Sphere(Vec3f(-2, 3, 1), 1.0, mat1));
+  scene.addSphere(Sphere(Vec3f(3, 1, 2), 1.0, mat1));
 
   // レンダリング
 #pragma omp parallel for schedule(dynamic, 1) collapse(2)
