@@ -23,7 +23,6 @@ int main() {
   const auto white = std::make_shared<Lambert>(Vec3f(0.8));
   const auto red = std::make_shared<Lambert>(Vec3f(0.8, 0.05, 0.05));
   const auto green = std::make_shared<Lambert>(Vec3f(0.05, 0.8, 0.05));
-  const auto lightm = std::make_shared<Lambert>(Vec3f(34, 19, 10));
 
   const auto floor =
       std::make_shared<Plane>(Vec3f(0), Vec3f(0, 0, 5.592), Vec3f(5.56, 0, 0));
@@ -58,8 +57,10 @@ int main() {
   const auto tallBox5 = std::make_shared<Plane>(
       Vec3f(2.65, 0, 2.96), Vec3f(0, 3.3, 0), Vec3f(1.58, 0, -0.49));
 
-  const auto light = std::make_shared<Plane>(
+  const auto light_s = std::make_shared<Plane>(
       Vec3f(3.43, 5.486, 2.27), Vec3f(-1.3, 0, 0), Vec3f(0, 0, 1.05));
+
+  const auto light = std::make_shared<AreaLight>(Vec3f(34, 19, 10));
 
   scene.addPrimitive(Primitive(floor, white));
   scene.addPrimitive(Primitive(rightWall, red));
@@ -76,7 +77,7 @@ int main() {
   scene.addPrimitive(Primitive(tallBox3, white));
   scene.addPrimitive(Primitive(tallBox4, white));
   scene.addPrimitive(Primitive(tallBox5, white));
-  scene.addPrimitive(Primitive(light, white));
+  scene.addPrimitive(Primitive(light_s, white, light));
 
   // レンダリング
   renderer.render(scene, samples);

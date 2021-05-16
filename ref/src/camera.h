@@ -35,7 +35,7 @@ class PinholeCamera : public Camera {
     f = 1.0f / std::tan(0.5f * fov);
   }
 
-  Ray sampleRay(float u, float v) const {
+  Ray sampleRay(float u, float v) const override {
     const Vec3f I = camPos + u * camRight + v * camUp;  // 画素上の点の位置
     const Vec3f P = camPos + f * camForward;  // ピンホールの位置
     return Ray(I, normalize(P - I));
