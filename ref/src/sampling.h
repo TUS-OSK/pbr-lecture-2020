@@ -7,7 +7,7 @@
 #include "vec3.h"
 
 // 接空間での半球面一様サンプリング
-Vec3f sampleHemisphere(float u, float v, float& pdf) {
+inline Vec3f sampleHemisphere(float u, float v, float& pdf) {
   const float theta = std::acos(std::max(1.0f - u, 0.0f));
   const float phi = 2.0f * PI * v;
   pdf = PI_MUL_2_INV;
@@ -16,7 +16,7 @@ Vec3f sampleHemisphere(float u, float v, float& pdf) {
 }
 
 // 接空間での半球コサイン比例サンプリング
-Vec3f sampleCosineHemisphere(float u, float v, float& pdf) {
+inline Vec3f sampleCosineHemisphere(float u, float v, float& pdf) {
   const float theta =
       0.5f * std::acos(std::clamp(1.0f - 2.0f * u, -1.0f, 1.0f));
   const float phi = 2.0f * PI * v;

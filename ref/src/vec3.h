@@ -171,8 +171,8 @@ inline std::ostream& operator<<(std::ostream& stream, const Vec3<T>& v) {
 
 // ワールド座標系からローカル座標系への変換
 template <typename T>
-Vec3<T> worldToLocal(const Vec3<T>& v, const Vec3<T>& lx, const Vec3<T>& ly,
-                     const Vec3<T>& lz) {
+inline Vec3<T> worldToLocal(const Vec3<T>& v, const Vec3<T>& lx,
+                            const Vec3<T>& ly, const Vec3<T>& lz) {
   return Vec3<T>(v[0] * lx[0] + v[1] * lx[1] + v[2] * lx[2],
                  v[0] * ly[0] + v[1] * ly[1] + v[2] * ly[2],
                  v[0] * lz[0] + v[1] * lz[1] + v[2] * lz[2]);
@@ -180,8 +180,8 @@ Vec3<T> worldToLocal(const Vec3<T>& v, const Vec3<T>& lx, const Vec3<T>& ly,
 
 // ローカル座標系からワールド座標系への変換
 template <typename T>
-Vec3<T> localToWorld(const Vec3<T>& v, const Vec3<T>& lx, const Vec3<T>& ly,
-                     const Vec3<T>& lz) {
+inline Vec3<T> localToWorld(const Vec3<T>& v, const Vec3<T>& lx,
+                            const Vec3<T>& ly, const Vec3<T>& lz) {
   return Vec3<T>(v[0] * lx[0] + v[1] * ly[0] + v[2] * lz[0],
                  v[0] * lx[1] + v[1] * ly[1] + v[2] * lz[1],
                  v[0] * lx[2] + v[1] * ly[2] + v[2] * lz[2]);
@@ -211,7 +211,7 @@ inline bool refract(const Vec3f& v, const Vec3f& n, float ior1, float ior2,
 }
 
 // 法線から接空間の基底を計算する
-void tangentSpaceBasis(const Vec3f& n, Vec3f& t, Vec3f& b) {
+inline void tangentSpaceBasis(const Vec3f& n, Vec3f& t, Vec3f& b) {
   if (std::abs(n[1]) < 0.9f) {
     t = normalize(cross(n, Vec3f(0, 1, 0)));
   } else {
