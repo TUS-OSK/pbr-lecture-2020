@@ -9,3 +9,6 @@ target_link_libraries(spheres PRIVATE renderer)
 
 add_executable(cornell-box "cornell-box.cpp")
 target_link_libraries(cornell-box PRIVATE renderer)
+
+add_executable(cornell-box2 "cornell-box2.cpp")
+target_link_libraries(cornell-box2 PRIVATE renderer)

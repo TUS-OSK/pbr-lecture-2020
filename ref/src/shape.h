@@ -77,7 +77,7 @@ class Plane : public Shape {
 
     info.t = t;
     info.hitPos = hitPos;
-    info.hitNormal = dot(-ray.direction, normal) > 0.0 ? normal : -normal;
+    info.hitNormal = normal;
     return true;
   }
 };
