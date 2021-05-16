@@ -37,7 +37,7 @@ class PathTracing : public Integrator {
       IntersectInfo info;
       if (!scene.intersect(ray, info)) {
         // 空に飛んでいった場合
-        radiance += throughput * Vec3f(0);
+        radiance += throughput * scene.sky.Le();
         break;
       }
 

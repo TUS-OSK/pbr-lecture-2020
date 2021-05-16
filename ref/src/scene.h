@@ -8,11 +8,10 @@
 #include "ray.h"
 
 class Scene {
- private:
+ public:
   std::vector<Primitive> primitives;
   Sky sky;
 
- public:
   Scene(const Sky& sky) : sky(sky) {}
 
   void addPrimitive(const Primitive& primitive) {
