@@ -60,6 +60,6 @@ cmake -DBUILD_REFERENCE=On ..
 
 ![](img/cornell-box.png)
 
-### cornell-glass
+### cornell-box2
 
-![](img/cornell-box.png)
+![](img/cornell-box2.png)
