@@ -58,6 +58,8 @@ class PathTracing : public Integrator {
       const Vec3f wi = localToWorld(wiTangent, t, info.hitNormal, b);
 
       // cosの計算
+      // NOTE:
+      // 物体内部の場合, 法線がひっくり返っている可能性があるのでabsをつけている
       const float cos = std::abs(dot(wi, info.hitNormal));
 
       // throughputの更新
