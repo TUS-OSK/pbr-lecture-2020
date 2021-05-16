@@ -45,24 +45,27 @@ class PathTracing : public Integrator {
       Vec3f t, b;
       tangentSpaceBasis(info.hitNormal, t, b);
 
+      // レイの方向を接空間に変換
+      const Vec3f woTangent =
+          worldToLocal(-ray.direction, t, info.hitNormal, b);
+
       // BSDF Sampling
       float pdf;
-      Vec3f directionTangent;
+      Vec3f wiTangent;
       const Vec3f bsdf =
-          info.hitSphere->bsdf->sample(rng, directionTangent, pdf);
+          info.hitSphere->bsdf->sample(rng, woTangent, wiTangent, pdf);
       // 接空間からワールド座標系への変換
-      const Vec3f direction =
-          localToWorld(directionTangent, t, info.hitNormal, b);
+      const Vec3f wi = localToWorld(wiTangent, t, info.hitNormal, b);
 
       // cosの計算
-      const float cos = std::abs(dot(direction, info.hitNormal));
+      const float cos = std::abs(dot(wi, info.hitNormal));
 
       // throughputの更新
       throughput *= bsdf * cos / pdf;
 
       // 次のレイの生成
       ray.origin = info.hitPos;
-      ray.direction = direction;
+      ray.direction = wi;
     }
 
     return radiance;

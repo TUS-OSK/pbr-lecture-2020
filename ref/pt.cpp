@@ -24,12 +24,13 @@ int main() {
   const auto mat2 = std::make_shared<Lambert>(Vec3f(0.9, 0.1, 0.1));
   const auto mat3 = std::make_shared<Lambert>(Vec3f(0.1, 0.9, 0.1));
   const auto mat4 = std::make_shared<Lambert>(Vec3f(0.1, 0.1, 0.9));
+  const auto mat5 = std::make_shared<Mirror>(Vec3f(0.9));
 
   scene.addSphere(Sphere(Vec3f(0, -1001, 0), 1000.0, mat1));
   scene.addSphere(Sphere(Vec3f(-2, 0, 1), 1.0, mat2));
   scene.addSphere(Sphere(Vec3f(0), 1.0, mat3));
   scene.addSphere(Sphere(Vec3f(2, 0, -1), 1.0, mat4));
-  scene.addSphere(Sphere(Vec3f(-2, 3, 1), 1.0, mat1));
+  scene.addSphere(Sphere(Vec3f(-2, 3, 1), 1.0, mat5));
   scene.addSphere(Sphere(Vec3f(3, 1, 2), 1.0, mat1));
 
   // レンダリング
