@@ -53,7 +53,7 @@ class PathTracing : public Integrator {
       float pdf;
       Vec3f wiTangent;
       const Vec3f bsdf =
-          info.hitSphere->bsdf->sample(rng, woTangent, wiTangent, pdf);
+          info.hitPrimitive->bsdf->sample(rng, woTangent, wiTangent, pdf);
       // 接空間からワールド座標系への変換
       const Vec3f wi = localToWorld(wiTangent, t, info.hitNormal, b);
 

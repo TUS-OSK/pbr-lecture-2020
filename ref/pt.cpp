@@ -20,6 +20,12 @@ int main() {
   // シーンの作成
   Scene scene;
 
+  const auto floor = std::make_shared<Sphere>(Vec3f(0, -1001, 0), 1000);
+  const auto sphere1 = std::make_shared<Sphere>(Vec3f(-2, 0, 1), 1);
+  const auto sphere2 = std::make_shared<Sphere>(Vec3f(0, 0, 2), 1);
+  const auto sphere3 = std::make_shared<Sphere>(Vec3f(2, 0, -1), 1);
+  const auto sphere4 = std::make_shared<Sphere>(Vec3f(-2, 3, 1), 1);
+
   const auto mat1 = std::make_shared<Lambert>(Vec3f(0.9));
   const auto mat2 = std::make_shared<Lambert>(Vec3f(0.9, 0.1, 0.1));
   const auto mat3 = std::make_shared<Lambert>(Vec3f(0.1, 0.9, 0.1));
@@ -27,11 +33,11 @@ int main() {
   const auto mat5 = std::make_shared<Mirror>(Vec3f(0.95));
   const auto mat6 = std::make_shared<Glass>(Vec3f(1.0), 1.5f);
 
-  scene.addSphere(Sphere(Vec3f(0, -1001, 0), 1000.0, mat1));
-  scene.addSphere(Sphere(Vec3f(-2, 0, 1), 1.0, mat2));
-  scene.addSphere(Sphere(Vec3f(0, 0, 2), 1.0, mat6));
-  scene.addSphere(Sphere(Vec3f(2, 0, -1), 1.0, mat4));
-  scene.addSphere(Sphere(Vec3f(-2, 3, 1), 1.0, mat5));
+  scene.addPrimitive(Primitive(floor, mat1));
+  scene.addPrimitive(Primitive(sphere1, mat2));
+  scene.addPrimitive(Primitive(sphere2, mat6));
+  scene.addPrimitive(Primitive(sphere3, mat4));
+  scene.addPrimitive(Primitive(sphere4, mat5));
 
   // レンダリング
   renderer.render(scene, samples);

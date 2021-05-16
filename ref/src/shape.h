@@ -1,20 +1,21 @@
 #ifndef _SPHERE_H
 #define _SPHERE_H
-#include <memory>
 
-#include "bsdf.h"
 #include "intersect-info.h"
 #include "ray.h"
 #include "vec3.h"
 
-class Sphere {
+class Shape {
  public:
-  Vec3f center;                // 中心位置
-  float radius;                // 半径
-  std::shared_ptr<BSDF> bsdf;  // BSDF
+  virtual bool intersect(const Ray& ray, IntersectInfo& info) const = 0;
+};
 
-  Sphere(const Vec3f& center, float radius, const std::shared_ptr<BSDF>& bsdf)
-      : center(center), radius(radius), bsdf(bsdf) {}
+class Sphere : public Shape {
+ public:
+  Vec3f center;  // 中心位置
+  float radius;  // 半径
+
+  Sphere(const Vec3f& center, float radius) : center(center), radius(radius) {}
 
   bool intersect(const Ray& ray, IntersectInfo& info) const {
     const float b = dot(ray.direction, ray.origin - center);
@@ -42,7 +43,6 @@ class Sphere {
     info.t = t;
     info.hitPos = ray(t);
     info.hitNormal = normalize(info.hitPos - center);
-    info.hitSphere = this;
 
     return true;
   }
