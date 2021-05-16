@@ -2,22 +2,22 @@
 #define _RENDERER_H
 #include <omp.h>
 
+#include "camera.h"
 #include "image.h"
 #include "integrator.h"
-#include "pinhole-camera.h"
 #include "scene.h"
 
 class Renderer {
  private:
   Image image;
-  std::shared_ptr<PinholeCamera> camera;
+  std::shared_ptr<Camera> camera;
   std::shared_ptr<Integrator> integrator;
 
  public:
-  Renderer(unsigned int width, unsigned int height, const Vec3f& camPos,
-           const Vec3f& camForward)
+  Renderer(unsigned int width, unsigned int height,
+           const std::shared_ptr<Camera>& camera)
       : image{width, height},
-        camera(std::make_shared<PinholeCamera>(camPos, camForward)),
+        camera(camera),
         integrator(std::make_shared<PathTracing>()) {}
 
   // レンダリングする

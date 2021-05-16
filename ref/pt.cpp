@@ -11,9 +11,11 @@ int main() {
   // カメラの設定
   constexpr Vec3f camPos(4, 1, 7);
   constexpr Vec3f lookAt(0);
+  const auto camera = std::make_shared<PinholeCamera>(
+      camPos, normalize(lookAt - camPos), 0.5f * PI);
 
   // レンダラーの作成
-  Renderer renderer(width, height, camPos, normalize(lookAt - camPos));
+  Renderer renderer(width, height, camera);
 
   // シーンの作成
   Scene scene;
