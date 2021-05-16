@@ -48,4 +48,38 @@ class Sphere : public Shape {
   }
 };
 
+class Plane : public Shape {
+ public:
+  const Vec3f leftCornerPoint;
+  const Vec3f right;
+  const Vec3f up;
+
+  Plane(const Vec3f& leftCornerPoint, const Vec3f& right, const Vec3f& up)
+      : leftCornerPoint(leftCornerPoint), right(right), up(up) {}
+
+  bool intersect(const Ray& ray, IntersectInfo& info) const override {
+    const Vec3f normal = normalize(cross(right, up));
+    const Vec3f center = leftCornerPoint + 0.5f * right + 0.5f * up;
+    const Vec3f rightDir = normalize(right);
+    const float rightLength = length(right);
+    const Vec3f upDir = normalize(up);
+    const float upLength = length(up);
+
+    const float t =
+        -dot(ray.origin - center, normal) / dot(ray.direction, normal);
+    if (t < ray.tmin || t > ray.tmax) return false;
+
+    const Vec3 hitPos = ray(t);
+    const float dx = dot(hitPos - leftCornerPoint, rightDir);
+    const float dy = dot(hitPos - leftCornerPoint, upDir);
+    if (dx < 0.0f || dx > rightLength || dy < 0.0f || dy > upLength)
+      return false;
+
+    info.t = t;
+    info.hitPos = hitPos;
+    info.hitNormal = dot(-ray.direction, normal) > 0.0 ? normal : -normal;
+    return true;
+  }
+};
+
 #endif

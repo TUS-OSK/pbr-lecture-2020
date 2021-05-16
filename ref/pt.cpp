@@ -20,7 +20,8 @@ int main() {
   // シーンの作成
   Scene scene;
 
-  const auto floor = std::make_shared<Sphere>(Vec3f(0, -1001, 0), 1000);
+  const auto floor = std::make_shared<Plane>(Vec3f(-5, -1, -5), Vec3f(10, 0, 0),
+                                             Vec3f(0, 0, 10));
   const auto sphere1 = std::make_shared<Sphere>(Vec3f(-2, 0, 1), 1);
   const auto sphere2 = std::make_shared<Sphere>(Vec3f(0, 0, 2), 1);
   const auto sphere3 = std::make_shared<Sphere>(Vec3f(2, 0, -1), 1);
