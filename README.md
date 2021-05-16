@@ -2,7 +2,7 @@
 
 [p-ray](https://p-ray.oskt.us/)の2020年度講義: 物理ベースレンダリング回のリポジトリです。
 
-![](img/pt.png)
+![](img/spheres.png)
 
 演習用のディレクトリやリファレンス実装が含まれています。CMakeを用いて簡単にビルドが行なえます。
 
@@ -27,9 +27,9 @@
 
 |Name|Description|
 |:--|:--|
-|`ref/rtao.cpp`|長さ2までのレンダリング方程式をモンテカルロ積分で数値計算する例|
-|`ref/pt.cpp`|パストレーシングでレンダリング方程式を解く例|
-|`ref/pt-importance.cpp`|重点的サンプリングを行った例|
+|`ref/src/`|リファレンス実装のレンダラー|
+|`ref/spheres.cpp`|球で構成されるシーン|
+|`ref/cornell-box.cpp`|コーネルボックス|
 
 ## Build
 
@@ -49,3 +49,17 @@ cmake --build .
 ```
 cmake -DBUILD_REFERENCE=On ..
 ```
+
+## Gallery
+
+### spheres
+
+![](img/spheres.png)
+
+### cornell-box
+
+![](img/cornell-box.png)
+
+### cornell-glass
+
+![](img/cornell-box.png)
