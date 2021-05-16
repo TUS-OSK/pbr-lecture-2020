@@ -18,7 +18,8 @@ int main() {
   Renderer renderer(width, height, camera);
 
   // シーンの作成
-  Scene scene;
+  Sky sky(Vec3f(1.0f));
+  Scene scene(sky);
 
   const auto floor = std::make_shared<Plane>(Vec3f(-5, -1, -5), Vec3f(10, 0, 0),
                                              Vec3f(0, 0, 10));

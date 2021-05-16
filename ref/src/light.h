@@ -17,4 +17,14 @@ class AreaLight : public Light {
   Vec3f Le() const override { return le; }
 };
 
+class Sky : public Light {
+ private:
+  const Vec3f le;
+
+ public:
+  Sky(const Vec3f& le) : le(le) {}
+
+  Vec3f Le() const override { return le; }
+};
+
 #endif

@@ -3,15 +3,17 @@
 #include <vector>
 
 #include "intersect-info.h"
+#include "light.h"
 #include "primitive.h"
 #include "ray.h"
 
 class Scene {
  private:
   std::vector<Primitive> primitives;
+  Sky sky;
 
  public:
-  Scene() {}
+  Scene(const Sky& sky) : sky(sky) {}
 
   void addPrimitive(const Primitive& primitive) {
     primitives.push_back(primitive);

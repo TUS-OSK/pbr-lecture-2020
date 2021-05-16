@@ -4,9 +4,9 @@
 #include "scene.h"
 
 int main() {
-  constexpr int width = 512;    // 画像の横幅[px]
-  constexpr int height = 512;   // 画像の縦幅[px]
-  constexpr int samples = 100;  // サンプル数
+  constexpr int width = 512;     // 画像の横幅[px]
+  constexpr int height = 512;    // 画像の縦幅[px]
+  constexpr int samples = 1000;  // サンプル数
 
   // カメラの設定
   constexpr Vec3f camPos(2.78, 2.73, -9);
@@ -18,7 +18,8 @@ int main() {
   Renderer renderer(width, height, camera);
 
   // シーンの作成
-  Scene scene;
+  Sky sky(Vec3f(0.0f));
+  Scene scene(sky);
 
   const auto white = std::make_shared<Lambert>(Vec3f(0.8));
   const auto red = std::make_shared<Lambert>(Vec3f(0.8, 0.05, 0.05));
