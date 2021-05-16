@@ -30,6 +30,7 @@
 |`ref/src/`|リファレンス実装のレンダラー|
 |`ref/spheres.cpp`|球で構成されるシーン|
 |`ref/cornell-box.cpp`|コーネルボックス|
+|`ref/cornell-box2.cpp`|ガラスバージョンのコーネルボックス|
 
 ## Build
 
