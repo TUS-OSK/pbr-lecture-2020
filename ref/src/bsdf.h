@@ -11,7 +11,7 @@ class BSDF {
   virtual Vec3f eval(const Vec3f& wo, const Vec3f& wi) const = 0;
 
   // BSDF x cosに比例するように方向サンプリングを行う
-  // 返り値としてBSDFの値, pdfを返す
+  // 返り値としてBSDFの値, 方向ベクトル, pdfを返す
   virtual Vec3f sample(RNG& rng, Vec3f& dir, float& pdf) const = 0;
 };
 
