@@ -25,8 +25,9 @@ class PathTracing : public Integrator {
     Ray ray = ray_in;
     for (int i = 0; i < maxDepth; ++i) {
       // ロシアンルーレット
-      const float russianRouletteProb =
-          std::max(std::max(throughput[0], throughput[1]), throughput[2]);
+      const float russianRouletteProb = std::min(
+          std::max(std::max(throughput[0], throughput[1]), throughput[2]),
+          1.0f);
       if (rng.getNext() > russianRouletteProb) {
         break;
       }
