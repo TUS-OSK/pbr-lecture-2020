@@ -212,7 +212,7 @@ inline bool refract(const Vec3f& v, const Vec3f& n, float ior1, float ior2,
 
 // 法線から接空間の基底を計算する
 void tangentSpaceBasis(const Vec3f& n, Vec3f& t, Vec3f& b) {
-  if (n[1] < 0.9f) {
+  if (std::abs(n[1]) < 0.9f) {
     t = normalize(cross(n, Vec3f(0, 1, 0)));
   } else {
     t = normalize(cross(n, Vec3f(0, 0, -1)));
