@@ -1,5 +1,3 @@
-#include <omp.h>
-
 #include <cmath>
 
 #include "renderer.h"

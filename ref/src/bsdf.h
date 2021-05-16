@@ -46,7 +46,7 @@ class Lambert : public BSDF {
 
 class Mirror : public BSDF {
  private:
-  const Vec3f rho;
+  const Vec3f rho;  // 反射率
 
  public:
   Mirror(const Vec3f& rho) : rho(rho) {}
@@ -65,8 +65,8 @@ class Mirror : public BSDF {
 
 class Glass : public BSDF {
  private:
-  const Vec3f rho;
-  const float ior;
+  const Vec3f rho;  // 反射率
+  const float ior;  // 屈折率
 
  public:
   Glass(const Vec3f& rho, float ior) : rho(rho), ior(ior) {}
